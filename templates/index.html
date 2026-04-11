@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ChurnIntelligence | Enterprise Prediction</title>
+<!-- Typography -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "enterprise-blue": "#0F172A",
+                "enterprise-gray-50": "#F8FAFC",
+                "enterprise-gray-100": "#F1F5F9",
+                "enterprise-gray-200": "#E2E8F0",
+                "enterprise-gray-400": "#94A3B8",
+                "enterprise-gray-600": "#475569",
+                "enterprise-accent": "#2563EB",
+                "enterprise-success": "#10B981",
+                "enterprise-warning": "#F59E0B"
+            },
+            "borderRadius": {
+                "DEFAULT": "4px",
+                "lg": "6px",
+                "xl": "8px",
+                "2xl": "12px",
+                "full": "9999px"
+            },
+            "fontFamily": {
+                "headline": ["Manrope", "sans-serif"],
+                "body": ["Inter", "sans-serif"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; color: #1E293B; -webkit-font-smoothing: antialiased; }
+        .font-headline { font-family: 'Manrope', sans-serif; letter-spacing: -0.02em; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20; }
+        .input-focus:focus { outline: none; border-color: #2563EB; ring: 0; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-enterprise-gray-200 flex justify-between items-center px-6 py-3 w-full">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 bg-enterprise-blue rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-xl" data-icon="insights">insights</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-sm font-bold text-enterprise-blue font-headline leading-tight">ChurnIntelligence</h1>
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-enterprise-success"></span>
+<span class="text-[10px] text-enterprise-gray-400 font-medium uppercase tracking-wider">System Sync: Active</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-enterprise-gray-600">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-enterprise-gray-200 overflow-hidden ring-1 ring-enterprise-gray-200 ring-offset-2">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcPxk3uN6eeE1xHEnZSF7uYFrfo5YfIOrTh5SzPM-n0V0nddU7tQnVXPsYUQnCfoTtfC_Dk4Y8K7ahJ_PSG49n1tBFQTW3pPvGCYumEO1_uNbIud3EcnTvP-i16Gy8CoOLnZ32UW5iwFEY2YjZmBL_Y14woq1B-jK90RBGr_h7gJLdK6j2H6cVd3rtsvS67tn_fg5g1ADvLlPGABAbXRJr0niA6EVxCp-gqF04R-JUdplRnRzCwOL2CingY8XwQJTiYu8qX5Owp2iv"/>
+</div>
+</div>
+</header>
+<main class="flex-grow px-5 pt-8 pb-32 max-w-2xl mx-auto w-full">
+<!-- Meta Info -->
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-2 bg-enterprise-gray-100 px-3 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-[16px] text-enterprise-accent" data-icon="auto_awesome">auto_awesome</span>
+<span class="text-[11px] font-semibold text-enterprise-gray-600">ML Engine v4.2.1 • 98.24% Precision</span>
+</div>
+<span class="text-[11px] font-medium text-enterprise-gray-400">Last trained: 14m ago</span>
+</div>
+<!-- Page Title -->
+<div class="mb-10">
+<h2 class="text-3xl font-extrabold text-enterprise-blue font-headline tracking-tighter">Subscriber Risk <span class="text-enterprise-accent">Assessment</span></h2>
+<p class="text-enterprise-gray-600 mt-2 text-sm leading-relaxed max-w-sm">Configure parameters below to generate a probability vector for customer churn.</p>
+</div>
+<form class="space-y-4" action="/predict" method="post">
+<!-- Demographics -->
+<div class="bg-white border border-enterprise-gray-200 rounded-xl overflow-hidden">
+<div class="px-5 py-4 border-b border-enterprise-gray-100 bg-enterprise-gray-50 flex items-center justify-between">
+<h3 class="text-xs font-bold text-enterprise-blue font-headline uppercase tracking-widest">Demographics</h3>
+<span class="material-symbols-outlined text-enterprise-gray-400" data-icon="badge">badge</span>
+</div>
+<div class="p-5 grid grid-cols-2 gap-x-6 gap-y-5">
+<div class="flex flex-col gap-1.5">
+<label class="text-[10px] font-bold text-enterprise-gray-400 uppercase tracking-wider">Gender</label>
+<select name="gender" class="border-b border-enterprise-gray-200 bg-transparent py-2 text-sm font-medium focus:border-enterprise-accent transition-colors appearance-none">
+<option>Female</option>
+<option>Male</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-[10px] font-bold text-enterprise-gray-400 uppercase tracking-wider">Senior Citizen</label>
+<select name="SeniorCitizen" class="border-b border-enterprise-gray-200 bg-transparent py-2 text-sm font-medium focus:border-enterprise-accent transition-colors appearance-none">
+<option value="0">No</option>
+<option value="1">Yes</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-[10px] font-bold text-enterprise-gray-400 uppercase tracking-wider">Partner</label>
+<select name="Partner" class="border-b border-enterprise-gray-200 bg-transparent py-2 text-sm font-medium focus:border-enterprise-accent transition-colors appearance-none">
+<option>Yes</option>
+<option>No</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-[10px] font-bold text-enterprise-gray-400 uppercase tracking-wider">Dependents</label>
+<select name="Dependents" class="border-b border-enterprise-gray-200 bg-transparent py-2 text-sm font-medium focus:border-enterprise-accent transition-colors appearance-none">
+<option>No</option>
+<option>Yes</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Infrastructure & Services -->
+<div class="bg-white border border-enterprise-gray-200 rounded-xl overflow-hidden">
+<div class="px-5 py-4 border-b border-enterprise-gray-100 bg-enterprise-gray-50 flex items-center justify-between">
+<h3 class="text-xs font-bold text-enterprise-blue font-headline uppercase tracking-widest">Service Profile</h3>
+<span class="material-symbols-outlined text-enterprise-gray-400" data-icon="layers">layers</span>
+</div>
+<div class="p-5 space-y-6">
+<div class="flex flex-col gap-1.5">
+<label class="text-[10px] font-bold text-enterprise-gray-400 uppercase tracking-wider">Primary Internet Service</label>
+<select name="InternetService" class="border-b border-enterprise-gray-200 bg-transparent py-2 text-sm font-medium focus:border-enterprise-accent transition-colors appearance-none">
+<option>Fiber optic</option>
+<option>DSL</option>
+<option>No</option>
+</select>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="border border-enterprise-gray-100 rounded-lg p-3 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-enterprise-gray-400 uppercase">Phone Service</span>
+<span class="text-xs font-semibold text-enterprise-blue">Phone Line</span>
+</div>
+<select name="PhoneService" class="bg-transparent text-[11px] font-bold text-enterprise-accent outline-none">
+<option>Yes</option>
+<option>No</option>
+</select>
+</div>
+<div class="border border-enterprise-gray-100 rounded-lg p-3 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-enterprise-gray-400 uppercase">Multiple Lines</span>
+<span class="text-xs font-semibold text-enterprise-blue">Multiple Numbers</span>
+</div>
+<select name="MultipleLines" class="bg-transparent text-[11px] font-bold text-enterprise-accent outline-none">
+<option>No</option>
+<option>Yes</option>
+<option>No phone service</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-4">
+<div class="border border-enterprise-gray-100 rounded-lg p-3 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-enterprise-gray-400 uppercase">Security</span>
+<span class="text-xs font-semibold text-enterprise-blue">Online Security</span>
+</div>
+<select name="OnlineSecurity" class="bg-transparent text-[11px] font-bold text-enterprise-accent outline-none">
+<option>Yes</option>
+<option>No</option>
+<option>No internet service</option>
+</select>
+</div>
+<div class="border border-enterprise-gray-100 rounded-lg p-3 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-enterprise-gray-400 uppercase">Backup</span>
+<span class="text-xs font-semibold text-enterprise-blue">Cloud Storage</span>
+</div>
+<select name="OnlineBackup" class="bg-transparent text-[11px] font-bold text-enterprise-accent outline-none">
+<option>No</option>
+<option>Yes</option>
+<option>No internet service</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-4">
+<div class="border border-enterprise-gray-100 rounded-lg p-3 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-enterprise-gray-400 uppercase">Device Protection</span>
+<span class="text-xs font-semibold text-enterprise-blue">Device Plan</span>
+</div>
+<select name="DeviceProtection" class="bg-transparent text-[11px] font-bold text-enterprise-accent outline-none">
+<option>No</option>
+<option>Yes</option>
+<option>No internet service</option>
+</select>
+</div>
+<div class="border border-enterprise-gray-100 rounded-lg p-3 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-enterprise-gray-400 uppercase">Tech Support</span>
+<span class="text-xs font-semibold text-enterprise-blue">Support Plan</span>
+</div>
+<select name="TechSupport" class="bg-transparent text-[11px] font-bold text-enterprise-accent outline-none">
+<option>No</option>
+<option>Yes</option>
+<option>No internet service</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-4">
+<div class="border border-enterprise-gray-100 rounded-lg p-3 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-enterprise-gray-400 uppercase">Streaming TV</span>
+<span class="text-xs font-semibold text-enterprise-blue">TV Service</span>
+</div>
+<select name="StreamingTV" class="bg-transparent text-[11px] font-bold text-enterprise-accent outline-none">
+<option>No</option>
+<option>Yes</option>
+<option>No internet service</option>
+</select>
+</div>
+<div class="border border-enterprise-gray-100 rounded-lg p-3 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-enterprise-gray-400 uppercase">Streaming Movies</span>
+<span class="text-xs font-semibold text-enterprise-blue">Movie Service</span>
+</div>
+<select name="StreamingMovies" class="bg-transparent text-[11px] font-bold text-enterprise-accent outline-none">
+<option>No</option>
+<option>Yes</option>
+<option>No internet service</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<!-- Contract & Billing -->
+<div class="bg-white border border-enterprise-gray-200 rounded-xl overflow-hidden">
+<div class="px-5 py-4 border-b border-enterprise-gray-100 bg-enterprise-gray-50 flex items-center justify-between">
+<h3 class="text-xs font-bold text-enterprise-blue font-headline uppercase tracking-widest">Billing Metrics</h3>
+<span class="material-symbols-outlined text-enterprise-gray-400" data-icon="payments">payments</span>
+</div>
+<div class="p-5 space-y-5">
+<div class="flex flex-col gap-1.5">
+<label class="text-[10px] font-bold text-enterprise-gray-400 uppercase tracking-wider">Contract Type</label>
+<select name="Contract" class="border-b border-enterprise-gray-200 bg-transparent py-2 text-sm font-medium focus:border-enterprise-accent transition-colors appearance-none">
+<option>Month-to-month</option>
+<option>One year</option>
+<option>Two year</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-[10px] font-bold text-enterprise-gray-400 uppercase tracking-wider">Paperless Billing</label>
+<select name="PaperlessBilling" class="border-b border-enterprise-gray-200 bg-transparent py-2 text-sm font-medium focus:border-enterprise-accent transition-colors appearance-none">
+<option>Yes</option>
+<option>No</option>
+</select>
+</div>
+<div class="grid grid-cols-2 gap-x-6">
+<div class="flex flex-col gap-1.5">
+<label class="text-[10px] font-bold text-enterprise-gray-400 uppercase tracking-wider">Tenure (Months)</label>
+<input name="tenure" class="border-b border-enterprise-gray-200 bg-transparent py-2 text-sm font-medium focus:border-enterprise-accent transition-colors" type="number" value="24"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-[10px] font-bold text-enterprise-gray-400 uppercase tracking-wider">Monthly MRR</label>
+<div class="relative">
+<span class="absolute left-0 top-2 text-enterprise-gray-400 text-sm">$</span>
+<input name="MonthlyCharges" class="w-full border-b border-enterprise-gray-200 bg-transparent py-2 pl-4 text-sm font-medium focus:border-enterprise-accent transition-colors" type="number" step="0.01" value="89.50"/>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-[10px] font-bold text-enterprise-gray-400 uppercase tracking-wider">Payment Instrument</label>
+<select name="PaymentMethod" class="border-b border-enterprise-gray-200 bg-transparent py-2 text-sm font-medium focus:border-enterprise-accent transition-colors appearance-none">
+<option>Electronic check</option>
+<option>Bank transfer (automatic)</option>
+<option>Credit card (automatic)</option>
+<option>Mailed check</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-[10px] font-bold text-enterprise-gray-400 uppercase tracking-wider">Total Charges</label>
+<div class="relative">
+<span class="absolute left-0 top-2 text-enterprise-gray-400 text-sm">$</span>
+<input name="TotalCharges" class="w-full border-b border-enterprise-gray-200 bg-transparent py-2 pl-4 text-sm font-medium focus:border-enterprise-accent transition-colors" type="number" step="0.01" value="2000.00"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Predict Button -->
+<div class="py-4">
+<button class="w-full h-14 bg-enterprise-blue text-white rounded-xl font-headline font-bold text-sm tracking-wide shadow-lg shadow-enterprise-blue/10 flex items-center justify-center gap-3 active:scale-[0.99] transition-all hover:bg-slate-800" type="submit">
+                RUN PREDICTIVE ANALYSIS
+                <span class="material-symbols-outlined text-[18px]" data-icon="terminal">terminal</span>
+</button>
+</div>
+<!-- High-End Analytics Result -->
+{% if prediction %}
+<div class="bg-white border border-enterprise-gray-200 rounded-xl overflow-hidden shadow-sm mt-8">
+<div class="px-5 py-4 border-b border-enterprise-gray-100 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full {% if prediction == 'CHURN' %}bg-enterprise-warning{% else %}bg-enterprise-success{% endif %} animate-pulse"></span>
+<span class="text-[10px] font-bold text-enterprise-gray-600 uppercase tracking-tighter">Analysis Terminal: Result Generated</span>
+</div>
+<span class="text-[10px] font-medium text-enterprise-gray-400">ID: 884-XPL</span>
+</div>
+<div class="p-6">
+<div class="flex items-end justify-between mb-8">
+<div>
+<span class="text-[11px] font-bold text-enterprise-accent uppercase tracking-widest block mb-1">Retention Probability</span>
+<h4 class="text-3xl font-extrabold font-headline text-enterprise-blue">{% if prediction == 'CHURN' %}Likely to Churn{% else %}Likely to Retain{% endif %}</h4>
+</div>
+<div class="text-right">
+<span class="text-4xl font-black font-headline text-enterprise-blue tracking-tighter">{{ confidence }}<span class="text-lg text-enterprise-gray-400 font-medium">%</span></span>
+<p class="text-[10px] font-bold text-enterprise-gray-400 uppercase mt-1">Confidence Score</p>
+</div>
+</div>
+<div class="space-y-5">
+<div class="space-y-2">
+<div class="flex justify-between items-center text-[10px] font-bold uppercase">
+<span class="text-enterprise-gray-600">Model Reliability</span>
+<span class="{% if prediction == 'CHURN' %}text-enterprise-warning{% else %}text-enterprise-success{% endif %}">High (92%)</span>
+</div>
+<div class="h-1 bg-enterprise-gray-100 rounded-full overflow-hidden">
+<div class="h-full {% if prediction == 'CHURN' %}bg-enterprise-warning{% else %}bg-enterprise-blue{% endif %} w-[92%] rounded-full"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-enterprise-gray-50 rounded-lg p-3 border border-enterprise-gray-100">
+<span class="text-[9px] font-bold text-enterprise-gray-400 uppercase block mb-1">Stability Index</span>
+<span class="text-sm font-bold text-enterprise-blue">0.88 / 1.0</span>
+</div>
+<div class="bg-enterprise-gray-50 rounded-lg p-3 border border-enterprise-gray-100">
+<span class="text-[9px] font-bold text-enterprise-gray-400 uppercase block mb-1">Risk Factor</span>
+<span class="text-sm font-bold {% if prediction == 'CHURN' %}text-enterprise-warning{% else %}text-enterprise-success{% endif %}">{% if prediction == 'CHURN' %}High (84.2%){% else %}Low (15.8%){% endif %}</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endif %}
+</form>
+</main>
+<!-- Bottom Navigation: Premium Mobile -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-white/95 backdrop-blur-xl border-t border-enterprise-gray-200 px-6 pb-8 pt-3 flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 group" href="#">
+<div class="w-12 h-8 rounded-full bg-enterprise-blue flex items-center justify-center transition-all group-hover:scale-105">
+<span class="material-symbols-outlined text-white text-[20px]" style="font-variation-settings: 'FILL' 1;">add_chart</span>
+</div>
+<span class="text-[10px] font-bold text-enterprise-blue uppercase tracking-tighter">Assess</span>
+</a>
+<a class="flex flex-col items-center gap-1 group text-enterprise-gray-400" href="#">
+<div class="w-12 h-8 rounded-full flex items-center justify-center group-hover:bg-enterprise-gray-100 transition-all">
+<span class="material-symbols-outlined text-[20px]">leaderboard</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Insights</span>
+</a>
+<a class="flex flex-col items-center gap-1 group text-enterprise-gray-400" href="#">
+<div class="w-12 h-8 rounded-full flex items-center justify-center group-hover:bg-enterprise-gray-100 transition-all">
+<span class="material-symbols-outlined text-[20px]">history</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter">History</span>
+</a>
+<a class="flex flex-col items-center gap-1 group text-enterprise-gray-400" href="#">
+<div class="w-12 h-8 rounded-full flex items-center justify-center group-hover:bg-enterprise-gray-100 transition-all">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter">System</span>
+</a>
+</nav>
+</body>
+</html>
