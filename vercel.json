@@ -1,5 +1,4 @@
 {
   "buildCommand": "pip install -r requirements.txt && python train.py",
-  "outputDirectory": ".",
-  "runtime": "python3.12"
+  "outputDirectory": "."
 }
